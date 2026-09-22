@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const authRoutes = require('./routes/authRoutes');
-// const testRoutes = require('./routes/testRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
 const overtimeRoutes = require('./routes/overtimeRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -11,7 +10,13 @@ const reportRoutes = require('./routes/reportRoutes');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://attendance-management-system-puce-chi.vercel.app'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -26,7 +31,6 @@ app.get("/", (req,res) =>{
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/attendance', attendanceRoutes);
-// app.use('/api/test', testRoutes);
 app.use('/api/overtime', overtimeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/report', reportRoutes);
